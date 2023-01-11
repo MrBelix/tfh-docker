@@ -30,18 +30,7 @@ services:
       - MYSQL_ROOT_PASSWORD
     volumes:
       - ./docker/database:/var/lib/mysql
-  phpmyadmin:
-    image: phpmyadmin
-    depends_on:
-      - database
-    networks:
-      - tagsforhope
-    ports:
-      - "8080:80"
-    environment:
-      - PMA_PASSWORD=MYSQL_ROOT_PASSWORD
-      - PMA_USER=root
-      - PMA_HOST=database
+
 networks:
   tagsforhope:
     driver: bridge
