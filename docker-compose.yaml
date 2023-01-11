@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  app:
+    build: ./docker/app
+    depends_on:
+      - database
+    networks:
+      - tagsforhope
+    volumes:
+      - ./src/:/var/app/
+  apache:
+    build: ./docker/apache
+    depends_on:
+      - app
+    networks:
+      - tagsforhope
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./src:/var/app
+  database:
+    image: mysql:8.0
+    networks:
+      - tagsforhope
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD
+    volumes:
+      - ./docker/database:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin
+    depends_on:
+      - database
+    networks:
+      - tagsforhope
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_PASSWORD=MYSQL_ROOT_PASSWORD
+      - PMA_USER=root
+      - PMA_HOST=database
+networks:
+  tagsforhope:
+    driver: bridge
