@@ -6,7 +6,7 @@ RUN php -r "readfile('https://getcomposer.org/installer');" | php -- --install-d
 
 # Install php modules
 RUN apk add libzip-dev libxml2-dev libpng-dev autoconf make binutils-gold g++ gcc imagemagick-dev imagemagick && \
-    docker-php-ext-install zip soap gd mysqli \
+    docker-php-ext-install zip soap gd mysqli pdo pdo_mysql \
     && pecl install imagick \
     && docker-php-ext-enable imagick
 
