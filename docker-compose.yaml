@@ -11,6 +11,7 @@ services:
       - ./src/:/var/app/
   apache:
     build: ./docker/apache
+    hostname: tagsforhope.loc
     depends_on:
       - app
     networks:
