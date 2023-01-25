@@ -5,7 +5,8 @@ FROM php:7.4-fpm-alpine
 RUN php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
 
 # Install php modules
-RUN apk add libzip-dev libxml2-dev libpng-dev autoconf make binutils-gold g++ gcc imagemagick-dev imagemagick freetype-dev libjpeg-turbo-dev && \
+RUN apk add libzip-dev libxml2-dev libpng-dev autoconf make binutils-gold g++ gcc imagemagick-dev imagemagick freetype-dev libjpeg-turbo-dev msttcorefonts-installer fontconfig && \
+    update-ms-fonts && \
     docker-php-ext-configute docker-php-ext-configure gd --with-jpeg --with-freetype && \
     docker-php-ext-install zip soap gd mysqli pdo pdo_mysql \
     && pecl install imagick \
