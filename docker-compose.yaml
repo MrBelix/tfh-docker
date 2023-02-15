@@ -2,7 +2,6 @@ version: "3.9"
 
 services:
   wordpress:
-    hostname: wordpress
     build: 
       context: ./docker/app
       args: 
@@ -15,11 +14,22 @@ services:
       - ./src:/var/app
 
   dashboard:
-    hostname: dashboard
     build: 
       context: ./docker/app
       args: 
         - PHP_VERSION=7.4
+    depends_on:
+      - database
+    networks:
+      - tagsforhope
+    volumes:
+      - ./src:/var/app
+
+  warranty:
+    build: 
+      context: ./docker/app
+      args: 
+        - PHP_VERSION=8.1
     depends_on:
       - database
     networks:
@@ -33,8 +43,10 @@ services:
     depends_on:
       - wordpress
       - dashboard
-    networks:
-      - tagsforhope
+    networks: 
+      tagsforhope:
+        aliases:
+          - dashboard.tagsforhope.loc
     ports:
       - "80:80"
       - "443:443"

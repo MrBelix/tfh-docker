@@ -11,7 +11,7 @@ RUN apk add libzip-dev libxml2-dev libpng-dev autoconf make binutils-gold g++ gc
     update-ms-fonts
 
 RUN docker-php-ext-configure gd --with-jpeg --with-freetype && \
-    docker-php-ext-install zip soap gd mysqli pdo pdo_mysql \
+    docker-php-ext-install zip soap gd mysqli pdo pdo_mysql opcache \
     && pecl install imagick \
     && docker-php-ext-enable imagick
 
