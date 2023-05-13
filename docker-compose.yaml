@@ -1,7 +1,7 @@
 version: "3.9"
 
 services:
-  wordpress:
+  app:
     build: 
       context: ./docker/app
       args: 
@@ -13,27 +13,11 @@ services:
     volumes:
       - ./src:/var/app
 
-  dashboard:
-    build: 
-      context: ./docker/app
+  node:
+    build:
+      context: ./docker/node
       args: 
-        - PHP_VERSION=7.4
-    depends_on:
-      - database
-    networks:
-      - tagsforhope
-    volumes:
-      - ./src:/var/app
-
-  warranty:
-    build: 
-      context: ./docker/app
-      args: 
-        - PHP_VERSION=8.1
-    depends_on:
-      - database
-    networks:
-      - tagsforhope
+       - NODE_VERSION=18
     volumes:
       - ./src:/var/app
 
@@ -41,8 +25,7 @@ services:
     build: ./docker/apache
     hostname: tagsforhope.loc
     depends_on:
-      - wordpress
-      - dashboard
+      - app
     networks: 
       tagsforhope:
         aliases:
